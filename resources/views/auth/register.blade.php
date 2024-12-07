@@ -1,59 +1,40 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+<x-app-layout>
+    <div class="container">
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+        <h1 class="text-center"> Registro </h1>
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST">
             @csrf
-
-            <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
-
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+            <div class="form-group mb-3">
+                <label for="email"> Email </label>
+                <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" placeholder="Ingrese su correo electrónico">
+                @error('email')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
-
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+            <div class="row mb-3">
+                <div class="col-sm-6 form-group">
+                    <label for="password"> Contraseña </label>
+                    <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror">
+                    @error('password')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="password_confirmation"> Confirmar Contraseña </label>
+                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
+                </div>
             </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
+            <div class="form-group mb-3">
+                <label for="name"> Nombre y apellido </label>
+                <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="Ingrese su nombre completo">
+                @error('name')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
-            </div>
+            <button type="submit" class="btn btn-success mb-3"> Enviar </button>
+            <p>Ya tenés cuenta? <a href="/login">Ingresá</a></p>
         </form>
-    </x-auth-card>
-</x-guest-layout>
+
+    </div>
+</x-app-layout>

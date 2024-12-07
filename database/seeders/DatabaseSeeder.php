@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // Roles
+        Role::updateOrCreate(['id' => Role::ADMIN], ['name' => 'Administrador']);
+        Role::updateOrCreate(['id' => Role::CUSTOMER], ['name' => 'Comprador']);
+
+        User::firstOrCreate(['email' => 'admin@admin.com'], [
+            'name' => 'admin',
+            'password' => Hash::make('admin'),
+            'role_id' => Role::ADMIN,
+        ]);
     }
 }
