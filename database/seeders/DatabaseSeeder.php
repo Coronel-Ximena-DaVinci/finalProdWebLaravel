@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -16,6 +17,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // Categories
+        Category::updateOrCreate(['id' => 1], ['name' => 'Electrónica']);
+
         // Roles
         Role::updateOrCreate(['id' => Role::ADMIN], ['name' => 'Administrador']);
         Role::updateOrCreate(['id' => Role::CUSTOMER], ['name' => 'Comprador']);

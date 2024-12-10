@@ -1,5 +1,5 @@
 <x-app-layout>
     <div>
-        You're logged in!
+        ¡Bienvenido!
     </div>
 </x-app-layout>

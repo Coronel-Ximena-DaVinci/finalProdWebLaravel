@@ -1,6 +1,15 @@
-<ul>
-    <li><a href="www.twitter.com"><i class="fab fa-twitter-square"></i> Twitter</a></li>
-    <li><a href="www.instagram.com"><i class="fab fa-instagram-square"></i> Instagram</a></li>
-    <li><a href="www.youtube.com"><i class="fab fa-youtube-square"></i> Youtube</a></li>
-    <li><a href="www.facebook.com"><i class="fab fa-facebook-square"></i> Facebook</a></li>
-</ul>
+<div id="collapse navbar-collapse" class="text-center">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="fab fa-twitter-square" href="www.twitter.com">Twitter</a>
+        </li>
+        <li class="nav-item">
+            <a class="fab fa-instagram-square" href="www.instagram.com">Instagram</a>
+        </li>
+        <li class="nav-item">
+            <a class="fab fa-youtube-square" href="www.youtube.com">Youtube</a>
+        </li>
+        <li class="nav-item">
+            <a class="fab fa-facebook-square" href="www.facebook.com">Facebook</a>
+        </li>
+</div>

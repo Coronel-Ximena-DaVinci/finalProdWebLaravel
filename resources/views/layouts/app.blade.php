@@ -21,7 +21,14 @@
         @include('layouts.navigation')
     </header>
     <main class="mt-4">
-        {{ $slot }}
+        <div class="container">
+            @if(request()->session()->has('message'))
+                <div class="alert alert-success">
+                    {{ request()->session()->get('message') }}
+                </div>
+            @endif
+            {{ $slot }}
+        </div>
     </main>
     <footer class="mt-auto">
         @include('layouts.footer')
