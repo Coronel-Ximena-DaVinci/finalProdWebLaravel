@@ -4,7 +4,7 @@
             <h1> Productos </h1>
         </div>
         <div class="col-sm-6 text-sm-end">
-            <a href="{{ route('products.create') }}" class="btn btn-success">Agregar</a>
+            <a href="{{ route('admin.products.create') }}" class="btn btn-success">Agregar</a>
         </div>
     </div>
     <div class="card bg-light">
@@ -15,7 +15,7 @@
                 </div>
                 <div class="text-sm-end">
                     <button type="submit" class="btn btn-primary">Buscar</button>
-                    <a href="{{ route('products.index') }}" class="btn btn-outline-primary">Limpiar</a>
+                    <a href="{{ route('admin.products.index') }}" class="btn btn-outline-primary">Limpiar</a>
                 </div>
             {!! Form::close() !!}
         </div>
@@ -38,7 +38,7 @@
                 <td>
                     <a href="#" class="text text-primary"> Imagen </a>
                     |
-                    <a href="{{ route('products.edit', $pro->id) }}" class="text text-primary">Editar</a>
+                    <a href="{{ route('admin.products.edit', $pro->id) }}" class="text text-primary">Editar</a>
                     |
                     <a href="#" class="text text-danger btn_eliminar_producto">Eliminar</a>
                 </td>

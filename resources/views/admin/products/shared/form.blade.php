@@ -27,4 +27,4 @@
     @enderror
 </div>
 <button type="submit" class="btn btn-success"> Guardar </button>
-<a class="btn btn-danger" href="{{ route('products.index') }}"> Cancelar </a>
+<a class="btn btn-danger" href="{{ route('admin.products.index') }}"> Cancelar </a>
