@@ -15,7 +15,7 @@
                     <a class="nav-link active" aria-current="page" href="/">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Productos</a>
+                    <a class="nav-link active" aria-current="page" href="/">Quienes somos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Contacto</a>
@@ -28,8 +28,8 @@
                                 Productos
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{{ route('products.index') }}"> Ver productos </a></li>
-                                <li><a class="dropdown-item" href="{{ route('products.create') }}"> Agregar producto </a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.products.index') }}"> Ver productos </a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.products.create') }}"> Agregar producto </a></li>
                             </ul>
                         </li>
                     @endif

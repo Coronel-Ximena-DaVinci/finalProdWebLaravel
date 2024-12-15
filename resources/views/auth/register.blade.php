@@ -32,7 +32,7 @@
             @enderror
         </div>
         <button type="submit" class="btn btn-success mb-3"> Enviar </button>
-        <p>Ya tenés cuenta? <a href="/login">Ingresá</a></p>
+        <p>¿Ya tenés cuenta? <a href="/login">Ingresá</a></p>
     </form>
 
 </x-app-layout>
