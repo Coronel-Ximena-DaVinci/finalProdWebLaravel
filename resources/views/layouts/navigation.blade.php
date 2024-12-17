@@ -5,7 +5,7 @@
                 <a class="navbar-brand" href="#">
                     <img src="/images/logo.png" alt="Logo" width="30" height="24"
                         class="d-inline-block align-text-top">
-                    Casa de Computación
+                    {{ config('app.name') }}
                 </a>
             </div>
         </nav>
@@ -44,7 +44,7 @@
             <li class="nav-item">
                 <form action="/logout" method="POST">
                     @csrf
-                    <button type="submit" class="nav-link active" aria-current="page" href="logout.php"> 
+                    <button type="submit" class="nav-link active" aria-current="page" href="logout.php">
                         Cerrar sesión
                     </button>
                 </form>

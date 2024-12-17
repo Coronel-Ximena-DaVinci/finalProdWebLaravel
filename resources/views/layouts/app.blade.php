@@ -16,7 +16,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
 </head>
 
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 bg-light">
     <header>
         @include('layouts.navigation')
     </header>

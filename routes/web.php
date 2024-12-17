@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\ProductsController;
-use App\Http\Controllers\ProductsUserController;
+use App\Http\Controllers\CatalogoController;
 use App\Http\Controllers\HomeController;
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
@@ -17,18 +18,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::prefix('')->controller(HomeController::class)->group(function () {
-    Route::get('', 'index');
+    Route::get('', 'index')->name('home.index');
 });
 
-Route::prefix('')->controller(ProductsUserController::class)->group(function () {
-    Route::get('catalogo', 'index');
-    Route::get('buscar', 'search');
-    Route::get('mostrar', 'show');
+Route::prefix('')->name('catalogo.')->controller(CatalogoController::class)->group(function () {
+    Route::get('catalogo', 'index')->name('index');
+    Route::get('buscar', 'search')->name('search');
+    Route::get('mostrar/{id}', 'show')->name('show');
 });
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:' . Role::CUSTOMER])->group(function () {
 
-    Route::prefix('productos')->middleware(['auth', 'role:' . Role::CUSTOMER])->controller(ProductsController::class)->name('products.')->group(function () {
+    Route::prefix('productos')->controller(ProductsController::class)->name('products.')->group(function () {
+        Route::get('', 'index')->name('index');
+        Route::get('crear', 'create')->name('create');
+        Route::post('crear', 'store')->name('store');
+        Route::get('editar/{id}', 'edit')->name('edit');
+        Route::post('editar/{id}', 'update')->name('update');
+        Route::post('eliminar/{id}', 'delete')->name('delete');
+    });
+    Route::prefix('categorias')->controller(CategoriesController::class)->name('categories.')->group(function () {
         Route::get('', 'index')->name('index');
         Route::get('crear', 'create')->name('create');
         Route::post('crear', 'store')->name('store');

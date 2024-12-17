@@ -5,11 +5,13 @@
             <div class="row">
                 @foreach ($productos as $pro)
                     <div class="col-md-4">
-                        <div class="card mb-4 box-shadow">
-                            <h3>{{ $pro->name }}</h3>
-                            <img class="card-img-top" data-src="/images/{{ $pro->image }}" alt="Audiculares">
+                        <a href="{{ route('catalogo.show', $pro->id) }}" class="card mb-4 box-shadow" style="text-decoration: none;">
+                            <img class="card-img-top" style="object-fit: contain;" src="{{ $pro->imageUrl }}"
+                                alt="Audiculares" height="200">
                             <div class="card-body">
-                                <p class="card-text">{{ $pro->description }}</p>
+                                <h3>{{ $pro->name }}</h3>
+                                <h4>$ {{ number_format($pro->price, 2, ',', '.') }}</h4>
+                                <p class="card-text" style='white-space: pre-line;'>{{ $pro->description }}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">Ver</button>
@@ -17,7 +19,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 @endforeach
             </div>
