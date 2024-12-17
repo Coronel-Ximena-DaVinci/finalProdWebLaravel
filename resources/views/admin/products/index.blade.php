@@ -1,37 +1,34 @@
 <x-app-layout>
-    <div class="row">
-        <div class="col-sm-6">
-            <h1> Productos </h1>
+    <div class="row mb-2">
+        <div class="col-6">
+            <h1 class="mb-0"> Productos </h1>
         </div>
-        <div class="col-sm-6 text-sm-end">
+        <div class="col-6 text-end">
             <a href="{{ route('admin.products.create') }}" class="btn btn-success">Agregar</a>
         </div>
     </div>
-    <div class="card bg-white">
-        <div class="card-body">
-            {!! Form::open(['method' => 'GET']) !!}
-            <div class="form-group mb-2">
+    <x-crud.filters>
+        <div class="row">
+            <div class="col-sm-6 form-group mb-2">
                 {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nombre']) !!}
             </div>
-            <div class="text-sm-end">
-                <button type="submit" class="btn btn-primary">Buscar</button>
-                <a href="{{ route('admin.products.index') }}" class="btn btn-outline-primary">Limpiar</a>
+            <div class="col-sm-6 form-group mb-2">
+                {!! Form::select('category_id', $categories, null, ['class' => 'form-select', 'placeholder' => 'Todas las categorias']) !!}
             </div>
-            {!! Form::close() !!}
         </div>
-    </div>
-    <table class="table table-light">
+    </x-crud.filters>
+    <x-crud.table>
         <thead>
             <tr>
-                <th style="width: 40%;" scope="col"> Nombre </th>
-                <th style="width: 10%;" scope="col"> Precio </th>
-                <th style="width: 20%;" scope="col"> Categoría </th>
-                <th style="width: 10%;" scope="col"> Stock </th>
-                <th style="width: 20%;" scope="col"> Acciones </th>
+                <th scope="col"> Nombre </th>
+                <th scope="col"> Precio </th>
+                <th scope="col"> Categoría </th>
+                <th scope="col"> Stock </th>
+                <th style="width: 120px;" scope="col"> Acciones </th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($productos as $pro)
+            @forelse($productos as $pro)
                 <tr>
                     <td>{{ $pro->name }}</td>
                     <td>$ {{ number_format($pro->price, 2, ',', '.') }}</td>
@@ -39,15 +36,22 @@
                     <td> {{$pro->stock }}</td>
                     <td>
                         {!! Form::open(['method' => 'POST', 'url' => route('admin.products.delete', $pro->id)]) !!}
-                        <a href="{{ route('admin.products.edit', $pro->id) }}" class='btn btn-link text-primary'>Editar</a>
-                        |
-                        <button type='submit' class='btn btn-link text-danger'>Eliminar</button>
+                            <a href="{{ route('admin.products.edit', $pro->id) }}" class='btn btn-outline-primary' title="Editar">
+                                <i class="fa-solid fa-fw fa-edit"></i>
+                            </a>
+
+                            <button type='submit' class='btn btn-outline-danger' title="Eliminar">
+                                <i class="fa-solid fa-fw fa-trash"></i>
+                            </button>
                         {!! Form::close() !!}
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="100%" class="text-center">No hay resultados</td>
+                </tr>
+            @endforelse
         </tbody>
-    </table>
-    {!! $productos->appends(request()->except('page'))->links() !!}
+    </x-crud.table>
 
 </x-app-layout>

@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-sm-4">
                     <h4>
-                        <i class='fa-solid fa-user'> </i>
+                        <i class='fa-solid fa-fw fa-user'> </i>
                         {{ $producto->name }}
                     </h4>
 

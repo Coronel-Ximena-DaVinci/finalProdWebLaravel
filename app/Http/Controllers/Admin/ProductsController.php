@@ -7,7 +7,6 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
@@ -19,9 +18,14 @@ class ProductsController extends Controller
             $productos->where('name', 'like', '%' .  $request->name . '%');
         }
 
+        if ($request->category_id) {
+            $productos->where('category_id', $request->category_id);
+        }
+
         $request->session()->flashInput($request->all());
         return view('admin.products.index', [
             'productos' => $productos->paginate(5),
+            'categories' => Category::query()->pluck('name', 'id'),
         ]);
     }
 
@@ -34,16 +38,11 @@ class ProductsController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => ['required', 'unique:products,name'],
-            'description' => ['required'],
-            'stock' => ['required'],
-            'price' => ['required'],
-            'category_id' => ['required', 'exists:categories,id'],
-            'image' => ['required', 'file', 'mimetypes:image/*'],
-        ]);
+        $request->validate($this->rules());
 
-        Product::create($request->all());
+        $producto = new Product();
+        $this->save($producto, $request);
+
         return redirect()->route('admin.products.index')->with('message', 'Producto creado');
     }
 
@@ -55,53 +54,45 @@ class ProductsController extends Controller
             'categories' => Category::query()->pluck('name', 'id'),
         ]);
     }
+
     public function update(Request $request, $id)
     {
-
         $producto = Product::findOrFail($id);
-        $request->validate([
-            'name' => ['required', 'unique:products,name,' . $producto->id],
-            'description' => ['required'],
-            'stock' => ['required'],
-            'price' => ['required'],
-            'category_id' => ['required', 'exists:categories,id'],
-            'image' => ['nullable', 'file', 'mimetypes:image/*'],
-        ]);
+        $request->validate($this->rules($producto));
+
         $this->save($producto, $request);
 
-
         return redirect()->route('admin.products.index')->with('message', 'Producto modificado');
-
     }
-    protected function save(Product $producto, Request $request){
-        DB::transaction(function () use ($producto, $request) {
-            $producto->update($request->all());
-            if ($request->image) {
-                $ds = DIRECTORY_SEPARATOR;
-                $path = "products{$ds}{$producto->id}{$ds}image";
-                $filename = $request->image->getClientOriginalName();
-                $old = $producto->image;
 
-                /**
-                 * @var Illuminate\Filesystem\FilesystemAdapter $storage
-                 */
-                $storage = Storage::disk('public');
-                if ($old) {
-                    Storage::disk('public')->delete($producto->image);
-                }
-                $storage->putFileAs($path, $request->image, $filename);
-                $producto->image = $path . $ds . $filename;
-                $producto->save();
+    protected function save(Product $producto, Request $request)
+    {
+        DB::transaction(function () use ($producto, $request) {
+            $producto->fill($request->all());
+            $producto->save();
+            if ($request->image) {
+                $producto->saveImage($request->image);
             }
         });
     }
-
 
     public function delete(Request $request, $id)
     {
         $producto = Product::findOrFail($id);
         $producto->delete();
-        return redirect()->route('admin.products.index')->with('message', 'Producto eliminado');
 
+        return redirect()->route('admin.products.index')->with('message', 'Producto eliminado');
+    }
+
+    protected function rules($producto = null)
+    {
+        return [
+            'name' => ['required', 'unique:products,name,' . ($producto ? $producto->id : 'NULL')],
+            'description' => ['required'],
+            'stock' => ['required'],
+            'price' => ['required'],
+            'category_id' => ['required', 'exists:categories,id'],
+            'image' => ['nullable', 'file', 'mimetypes:image/*'],
+        ];
     }
 }

@@ -1,50 +1,48 @@
 <x-app-layout>
-    <div class="row">
-        <div class="col-sm-6">
-            <h1> Categoria </h1>
+    <div class="row mb-2">
+        <div class="col-6">
+            <h1 class="mb-0"> Categorias </h1>
         </div>
-        <div class="col-sm-6 text-sm-end">
+        <div class="col-6 text-end">
             <a href="{{ route('admin.categories.create') }}" class="btn btn-success">Agregar</a>
         </div>
     </div>
-    <div class="card bg-white">
-        <div class="card-body">
-            {!! Form::open(['method' => 'GET']) !!}
-            <div class="form-group mb-2">
-                {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nombre']) !!}
-            </div>
-            <div class="text-sm-end">
-                <button type="submit" class="btn btn-primary">Buscar</button>
-                <a href="{{ route('admin.categories.index') }}" class="btn btn-outline-primary">Limpiar</a>
-            </div>
-            {!! Form::close() !!}
+    <x-crud.filters>
+        <div class="form-group mb-2">
+            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nombre']) !!}
         </div>
-    </div>
-    <table class="table table-light">
+    </x-crud.filters>
+    <x-crud.table :paginator="$categorias">
         <thead>
             <tr>
-                <th style="width: 40%;" scope="col"> Nombre </th>
-                <th style="width: 20%;" scope="col"> Acciones </th>
+                <th scope="col"> Nombre </th>
+                <th style="width: 120px;" scope="col"> Acciones </th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($categorias as $categ)
+            @forelse($categorias as $categ)
                 <tr>
                     <td>{{ $categ->name }}</td>
                     <td>
                         {!! Form::open(['method' => 'POST', 'url' => route('admin.categories.delete', $categ->id)]) !!}
-                        <a href="{{ route('admin.categories.edit', $categ->id) }}" class='btn btn-link text-primary'>Editar</a>
+                            <a href="{{ route('admin.categories.edit', $categ->id) }}" class='btn btn-outline-primary' title="Editar">
+                                <i class="fa-solid fa-fw fa-edit"></i>
+                            </a>
 
-                        @if($categ->products_count == 0)
-                        |
-                        <button type='submit' class='btn btn-link text-danger'>Eliminar</button>
-                        @endif
+                            @if($categ->products_count == 0)
+                                <button type='submit' class='btn btn-outline-danger' title="Eliminar">
+                                    <i class="fa-solid fa-fw fa-trash"></i>
+                                </button>
+                            @endif
                         {!! Form::close() !!}
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="100%">No hay resultados</td>
+                </tr>
+            @endforelse
         </tbody>
-    </table>
-    {!! $categorias->appends(request()->except('page'))->links() !!}
+    </x-crud.table>
 
 </x-app-layout>

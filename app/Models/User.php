@@ -38,7 +38,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function isAdministrador() {
+    public function role() {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function isAdministrator() {
         return $this->role_id == Role::ADMIN;
     }
 }
