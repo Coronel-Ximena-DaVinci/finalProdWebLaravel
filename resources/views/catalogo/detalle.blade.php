@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     <div class="card bg-white">
         <div class="card-body">
             <div class="row">
@@ -87,4 +87,4 @@
         </div>
     </div>
 
-</x-app-layout>
+</x-layouts.app>

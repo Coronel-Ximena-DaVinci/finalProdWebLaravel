@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     <h1 class="text-center"> Mi Perfil </h1>
     <x-crud.form-card>
         {!! Form::model($usuario, ['method' => 'POST']) !!}
@@ -9,4 +9,4 @@
             </div>
         {!! Form::close() !!}
     </x-crud.form-card>
-</x-app-layout>
+</x-layouts.app>

@@ -18,7 +18,7 @@
 
 <body class="d-flex flex-column min-vh-100 bg-light">
     <header>
-        @include('layouts.navigation')
+        <x-layouts.navigation/>
     </header>
     <main class="mt-4">
         <div class="container">
@@ -31,7 +31,7 @@
         </div>
     </main>
     <footer class="mt-auto">
-        @include('layouts.footer')
+        <x-layouts.footer/>
     </footer>
 </body>
 

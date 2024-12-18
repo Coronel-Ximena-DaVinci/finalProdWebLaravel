@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     <h1 class="text-center"> Iniciar sesión </h1>
     <x-crud.form-card>
         <form method="POST">
@@ -20,4 +20,4 @@
             </div>
         </form>
     </x-crud.form-card>
-</x-app-layout>
+</x-layouts.app>

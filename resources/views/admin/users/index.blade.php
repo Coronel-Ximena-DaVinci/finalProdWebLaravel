@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     <div class="row mb-2">
         <div class="col-6">
             <h1 class="mb-0"> Usuarios </h1>
@@ -47,4 +47,4 @@
         </tbody>
     </x-crud.table>
 
-</x-app-layout>
+</x-layouts.app>

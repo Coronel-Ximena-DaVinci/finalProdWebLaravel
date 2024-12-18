@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
 
     <h1 class="text-center"> Registro </h1>
     <x-crud.form-card>
@@ -12,4 +12,4 @@
             </div>
         </form>
     </x-crud.form-card>
-</x-app-layout>
+</x-layouts.app>

@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     <div class='row'>
         <div class="col-md-8">
             @forelse($order->orderItems as $orderItem)
@@ -117,4 +117,4 @@
         </div>
     </div>
     <script></script>
-</x-app-layout>
+</x-layouts.app>

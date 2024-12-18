@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     <x-crud.form-card>
         <h3>
             Quienes Somos
@@ -56,4 +56,4 @@
             tincidunt eget eros a, lobortis blandit nulla. Integer a sapien at eros rutrum faucibus.
         </p>
     </x-crud.form-card>
-</x-app-layout>
+</x-layouts.app>

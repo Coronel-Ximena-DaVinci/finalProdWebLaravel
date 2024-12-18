@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     <div class="d-flex gap-4 mb-2">
         @if(request()->q)
             <a href="{{ route('catalogo.index', request()->except('q')) }}" class="btn btn-sm btn-outline-secondary">
@@ -34,4 +34,4 @@
             <div class="text-center">
                 {!! $productos->appends(request()->except('page'))->links() !!}
             </div>
-</x-app-layout>
+</x-layouts.app>

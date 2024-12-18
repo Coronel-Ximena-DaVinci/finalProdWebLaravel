@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     <x-crud.form-card>
         <h3>
             Contacto
@@ -11,4 +11,4 @@
             <li>WhatsApp: +54 9 11 0000-0000</li>
         </ul>
     </x-crud.form-card>
-</x-app-layout>
+</x-layouts.app>
