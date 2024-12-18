@@ -24,7 +24,7 @@
         <div class="container">
             @if(request()->session()->has('message'))
                 <div class="alert alert-success">
-                    {{ request()->session()->get('message') }}
+                    {!! request()->session()->get('message') !!}
                 </div>
             @endif
             {{ $slot }}

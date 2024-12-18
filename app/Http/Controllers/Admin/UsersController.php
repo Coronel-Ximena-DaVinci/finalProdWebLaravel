@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
 class UsersController extends Controller
@@ -67,7 +68,11 @@ class UsersController extends Controller
 
     protected function save(User $usuario, Request $request)
     {
-        $usuario->fill($request->all())->save();
+        $usuario->fill($request->all());
+        if ($request->password) {
+            $usuario->password = Hash::make($request->password);
+        }
+        $usuario->save();
     }
 
     public function delete(Request $request, $id)

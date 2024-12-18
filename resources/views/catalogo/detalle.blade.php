@@ -7,7 +7,6 @@
                 </div>
                 <div class="col-sm-4">
                     <h4>
-                        <i class='fa-solid fa-fw fa-user'> </i>
                         {{ $producto->name }}
                     </h4>
 
@@ -22,22 +21,23 @@
                     <p style='white-space: pre-line'>{{ $producto->description }}</p>
                 </div>
                 <div class="col-sm-3">
-                    {!! Form::open(['class' => 'form-inline']) !!}
+                    {!! Form::open(['class' => 'form-inline', 'route' => ['carrito.store', $producto->id]]) !!}
                     @if ($producto->stock)
                         <p class="fw-semibold text-success">Llega gratis el próximo lunes</p>
                         <p class="fw-semibold">Stock disponible</p>
-                        <p>
-                            Cantidad:
-                            {!! Form::number('quantity', 1, ['max' => $producto->stock]) !!}
-                        </p>
+                        <div class="d-md-flex gap-4 mb-2 align-items-center">
+                            <label for="quantity" class="text-end">
+                                Cantidad:
+                            </label>
+                            {!! Form::number('quantity', 1, ['id' => 'quantity', 'max' => $producto->stock, 'class' => 'form-control']) !!}
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-outline-primary">Agregar al carrito </button>
+                        </div>
                     @else
                         <p class="fw-semibold text-danger">Sin stock disponible</p>
                     @endif
                     {!! Form::close() !!}
-                    <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-outline-primary">Agregar al cariito </button>
-                        <button type="button" class="btn btn-primary">Comprar</button>
-                    </div>
                 </div>
             </div>
         </div>

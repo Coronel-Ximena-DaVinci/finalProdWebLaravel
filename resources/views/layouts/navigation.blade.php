@@ -16,26 +16,28 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Inicio</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ route('catalogo.index') }}">Catálogo</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"  data-bs-auto-close="outside">
                         Categorías
                     </a>
                     <ul class="dropdown-menu">
                         @foreach($categories as $category)
-                            <li><a class="dropdown-item" href="{{ route('admin.users.index') }}">{{ $category->name }}</a></li>
+                            <li><a class="dropdown-item" href="{{ route('catalogo.index', ['category_id' => $category->id]) }}">{{ $category->name }}</a></li>
                         @endforeach
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Quienes somos</a>
+                    <a class="nav-link active" aria-current="page" href="{{ route('home.about') }}">Quienes somos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Contacto</a>
+                    <a class="nav-link active" aria-current="page" href="{{ route('contact.create') }}">Contacto</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                @auth
-                    @if (Auth::user()->isAdministrator())
+                @can('admin')
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"  data-bs-auto-close="outside">
                             Administración
@@ -92,19 +94,30 @@
                         </ul>
 
                     </li>
-                @endif
-                @endauth
+                @endcan
                 <li class="nav-item">
-                    <form>
+                    {!! Form::open(['method' => 'GET', 'route' => 'catalogo.index']) !!}
                         <div class="input-group">
-                            <input class="form-control" type="Buscar" placeholder="Buscar" aria-label="Buscar">
+                            {!! Form::text('q', request()->q, ['class' => 'form-control', 'placeholder' => 'Buscar']) !!}
                             <button class="btn btn-outline-success" type="submit">
                                 <i class="fa-solid fa-fw fa-search"></i>
                             </button>
                         </div>
-                    </form>
+                    {!! Form::close() !!}
                 </li>
             @auth
+            @can('customer')
+            <li class="nav-item">
+                <a class="nav-link" style="position: relative"  href=" {{ route('carrito.index') }}">
+                    <i class="fa-solid fa-fw fa-shopping-cart"></i>
+                    @if(Auth::user()->currentOrder && Auth::user()->currentOrder->orderItems->count())
+                    <span style="position: absolute; top: 0; left: 27px; font-size: 12px; font-weight: bold;">
+                        ({{ Auth::user()->currentOrder->orderItems->count() }})
+                    </span>
+                    @endif
+                </a>
+            </li>
+            @endcan
             <li class="nav-item">
                 <form action="/logout" method="POST">
                     @csrf

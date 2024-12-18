@@ -41,3 +41,14 @@
         <small class="text-danger">{{ $message }}</small>
     @enderror
 </div>
+<div class="form-group mb-3">
+    <label for="name"> Dirección de Entrega </label>
+    {!! Form::text('location', null, [
+        'id' => 'location',
+        'class' => 'form-control ' . ($errors->has('location') ? 'is-invalid' : ''),
+        'placeholder' => 'Dirección de entrega',
+    ]) !!}
+    @error('location')
+        <small class="text-danger">{{ $message }}</small>
+    @enderror
+</div>

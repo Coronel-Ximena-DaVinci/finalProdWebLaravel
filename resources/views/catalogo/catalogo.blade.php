@@ -1,7 +1,21 @@
 <x-app-layout>
-    <div class="album py-5 bg-light">
-        <div class="container">
-
+    <div class="d-flex gap-4 mb-2">
+        @if(request()->q)
+            <a href="{{ route('catalogo.index', request()->except('q')) }}" class="btn btn-sm btn-outline-secondary">
+                {{ request()->q }}
+                <i class="fa-solid fa-fw- fa-times"></i>
+            </a>
+        @endif
+        @if(request()->category_id)
+        <?php
+            $category = App\Models\Category::find(request()->category_id);
+        ?>
+            <a href="{{ route('catalogo.index', request()->except('category_id')) }}" class="btn btn-sm btn-outline-{{ $category ? 'primary' : 'danger' }}">
+                {{ $category ? $category->name : 'Categorìa inexistente' }}
+                <i class="fa-solid fa-fw- fa-times"></i>
+            </a>
+        @endif
+    </div>
             <div class="row">
                 @foreach ($productos as $pro)
                     <div class="col-md-4">
@@ -23,6 +37,7 @@
                     </div>
                 @endforeach
             </div>
-        </div>
-    </div>
+            <div class="text-center">
+                {!! $productos->appends(request()->except('page'))->links() !!}
+            </div>
 </x-app-layout>

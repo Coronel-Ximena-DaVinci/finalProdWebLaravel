@@ -17,7 +17,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role_id',
+        'name',
+        'email',
+        'role_id',
+        'location',
     ];
 
     /**
@@ -26,7 +29,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -38,11 +42,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function role() {
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function currentOrder()
+    {
+        return $this->hasOne(Order::class)->where('purchased', false);
+    }
+
+    public function role()
+    {
         return $this->belongsTo(Role::class);
     }
 
-    public function isAdministrator() {
+    public function isAdministrator()
+    {
         return $this->role_id == Role::ADMIN;
     }
 }
