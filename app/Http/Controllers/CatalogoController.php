@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CatalogoController extends Controller
 {
@@ -28,8 +29,18 @@ class CatalogoController extends Controller
     public function show(Request $request, $id)
     {
         $producto = Product::findOrFail($id);
+        $max = $producto->stock;
+
+        $currentOrder = Auth::user() ? Auth::user()->currentOrder : null;
+        if ($currentOrder) {
+            $orderItem = $currentOrder->orderItems->where('product_id', $producto->id)->first();
+            if ($orderItem) {
+                $max -= $orderItem->quantity;
+            }
+        }
         return view('catalogo.detalle', [
             'producto' => $producto,
+            'max' => $max,
         ]);
     }
 }

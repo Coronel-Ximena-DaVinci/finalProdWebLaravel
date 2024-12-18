@@ -12,7 +12,6 @@
 
                     <p class="mb-1 text-decoration-line-through">$ {{ $producto->price * 1.25 }}</p>
                     <h2 class="fw-light">$ {{ $producto->price }}</h2>
-                    <p class="mb-1">O 6 cuotas de $ {{ sprintf('%0.2f', $producto->price * 0.25 - 0.01) }}</p>
                     <a href="#" class="text-decoration-none" data-bs-toggle="modal"
                         data-bs-target="#modal-medios-pago"><small>Ver los medios de pago</small></a>
                     <p class="mt-3 mb-0">
@@ -22,19 +21,33 @@
                 </div>
                 <div class="col-sm-3">
                     {!! Form::open(['class' => 'form-inline', 'route' => ['carrito.store', $producto->id]]) !!}
-                    @if ($producto->stock)
+                    @if ($max)
                         <p class="fw-semibold text-success">Llega gratis el próximo lunes</p>
                         <p class="fw-semibold">Stock disponible</p>
                         <div class="d-md-flex gap-4 mb-2 align-items-center">
                             <label for="quantity" class="text-end">
                                 Cantidad:
                             </label>
-                            {!! Form::number('quantity', 1, ['id' => 'quantity', 'max' => $producto->stock, 'class' => 'form-control']) !!}
+                            <div>
+                            {!! Form::number('quantity', 1, ['id' => 'quantity', 'max' => $max, 'class' => 'form-control']) !!}
+                            @error('quantity')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                            </div>
                         </div>
+                        @if(!Auth::user() || Auth::user()->can('customer'))
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-outline-primary">Agregar al carrito </button>
                         </div>
-                    @else
+                        @endif
+                        @elseif($producto->stock)
+                        <p class="fw-semibold text-danger">Estás comprando los ultimos que hay</p>
+                        <div class="d-grid">
+                            <a href="{{ route('carrito.index') }}" class="btn btn-outline-primary">
+                                Ir al carrito
+                            </a>
+                        </div>
+                        @elseif($producto->stock)
                         <p class="fw-semibold text-danger">Sin stock disponible</p>
                     @endif
                     {!! Form::close() !!}
@@ -51,15 +64,24 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h4>Dinero disponible en Mercado Pago</h4>
+                    <h4>
+                        Efectivo
+                    </h4>
                     <p>
-                        Al finalizar tu compra, pagás con el dinero disponible en tu cuenta.
-                        Podés ingresar dinero a Mercado Pago por Cuentas vinculadas,
-                        transferencia bancaria o en efectivo.
+                        Al llegar tu compra, pagás en efectivo a tu repartidor.
                     </p>
                     <hr />
-                    <h4>Tarjetas de crédito</h4>
-                    <p>Hasta 12 cuotas con interés con Visa y Mastercard</p>
+                    <h4>
+                        Dinero disponible en Mercado Pago
+                    </h4>
+                    <p>Próximamente</p>
+                    <hr />
+                    <h4>
+                        Tarjetas de débito y crédito
+                    </h4>
+                    <p>
+                        Próximamente
+                    </p>
                 </div>
             </div>
         </div>

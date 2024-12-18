@@ -131,7 +131,7 @@
                     <a class="nav-link active" aria-current="page" href="/login">Ingresar</a>
                 </li>
             @endauth
-</ul>
+            </ul>
         </div>
     </div>
 </nav>

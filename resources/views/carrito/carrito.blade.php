@@ -88,6 +88,13 @@
                                 </p>
                                 <a href="{{ route('profile.edit') }}" class="btn btn-outline-primary">Cambiar</a>
                             </div>
+                            {!! Form::open(['method' => 'POST', 'route' => ['carrito.purchase']]) !!}
+                            <div class="d-grid py-2">
+                                <button type="submit" class="btn btn-primary">
+                                    Finalizar compra
+                                </button>
+                            </div>
+                            {!! Form::close() !!}
                         @else
                             <h6 class="text-danger">No hay domicilio de entrega</h6>
                             <div class="d-flex justify-content-between">
@@ -95,13 +102,6 @@
                                     de entrega</a>
                             </div>
                         @endif
-                        {!! Form::open(['method' => 'POST', 'route' => ['carrito.purchase']]) !!}
-                        <div class="d-grid py-2">
-                            <button type="submit" class="btn btn-primary">
-                                Finalizar compra
-                            </button>
-                        </div>
-                        {!! Form::close() !!}
                     </div>
                 </div>
             @else

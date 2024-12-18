@@ -26,12 +26,6 @@
                                 <h3>{{ $pro->name }}</h3>
                                 <h4>$ {{ number_format($pro->price, 2, ',', '.') }}</h4>
                                 <p class="card-text" style='white-space: pre-line;'>{{ $pro->description }}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Ver</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Comprar</button>
-                                    </div>
-                                </div>
                             </div>
                         </a>
                     </div>

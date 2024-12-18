@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
@@ -30,7 +31,7 @@ class Order extends Model
         ]);
         $orderItem->quantity = $orderItem->quantity ?: 0;
         $orderItem->quantity += $quantity;
-        $orderItem->price += $product->price;
+        $orderItem->price = $product->price;
         $orderItem->save();
 
         return $orderItem;
@@ -42,6 +43,18 @@ class Order extends Model
             'product_id' => $product->id,
         ]);
         $orderItem->delete();
+    }
+    public function purchase() {
+        DB::transaction(function () {
+            foreach ($this->orderItems as $orderItem) {
+                // TODO: Ver que ande con concurrencia
+                $orderItem->product->update(['stock' => $orderItem->product->stock - $orderItem->quantity]);
+            }
+
+            $this->purchased = true;
+            $this->save();
+        });
+
     }
 
 }
